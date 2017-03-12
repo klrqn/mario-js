@@ -1,5 +1,3 @@
-pie5617fig2462rest
-
 var heightElem = document.getElementById("height");
 var formElem = document.getElementById("draw-form");
 
@@ -15,26 +13,30 @@ formElem.onsubmit = function(event) {
     clearError();
 
     // figure out the height the user typed
-    heightStr = heightElem.value;
+    // convert to string
+    heightStr = (heightElem.value);
 
     // TODO 1
     // if they didn't type anything at all, give a different error message,
     // something like "Please provide a height"
+    if (!heightStr) {
+        displayError("You must enter something!");
+        return;
+    }
 
-
-    // convert the string to an int
     height = parseInt(heightStr);
 
     // if the height is not-a-number, yell at them and exit early
     // TODO 2
+
     // negative numbers and zero should also be rejected here
-    if (isNaN(height)) {
+    if (isNaN(height) || height < 1) {
         displayError("That's not a valid height.");
         return;
     }
 
     // if the height is absurdly tall, yell at them and exit early
-    var tooTall = 100;
+    var tooTall = 25;
     if (height > tooTall) {
         displayError("Are you cray? I can't build a pyramid that tall.");
         return;
@@ -43,7 +45,6 @@ formElem.onsubmit = function(event) {
     // draw pyramid with the specified height
     drawPyramid(height);
 }
-
 
 /**
  * displayError
@@ -55,17 +56,15 @@ function displayError(message) {
     document.querySelector(".error-message").innerHTML = message;
 }
 
-
 /*
  * clearError
  *
  * Undisplays the error message and removes the red CSS style
  */
-function clearError(message) {
-    // TODO 3
-    // implement this function.
+function clearError() {
+    heightElem.className = "";
+    document.querySelector(".error-message").innerHTML = "";
 }
-
 
 
 /**
